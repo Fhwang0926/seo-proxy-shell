@@ -1,0 +1,14 @@
+{
+  "changelogPath": "CHANGELOG.md",
+  "include-v-in-tags": false,
+  "prerelease": true,
+  "packages": {
+    "app": {
+      "releaseType": "node",
+      "draft": false,
+      "bumpMinorPreMajor": false,
+      "bumpPatchForMinorPreMajor": false,
+      "versioning": "default"
+    }
+  }
+}
