@@ -21,7 +21,9 @@ jobs:
         id: prep
         run: |
           # DOCKER_IMAGE=${{ secrets.DOCKER_USERNAME }}/${GITHUB_REPOSITORY#*/}
-          DOCKER_IMAGE=${{ secrets.DOCKER_REGISTRY }}/seo/${GITHUB_REPOSITORY#*/}
+          DOCKER_IMAGE=${{ secrets.DOCKER_REGISTRY }}/seo/seo-proxy-shell
+          # ${GITHUB_REPOSITORY#*/}
+          # :${{ inputs.tag }}
 
           VERSION=${{ inputs.tag }}
           VERSION="${VERSION//v}"
