@@ -79,7 +79,7 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/ppc64le
           push: true
           # tags: ${{ steps.prep.outputs.tags }}
-          tags: lastest
+          tags: ${{ steps.prep.outputs.docker_image }}
       
       #- name: Push the tagged Docker image
       #  run: docker push harbor.donghwa.dev:4443/seo/${GITHUB_REPOSITORY#*/}:latest
