@@ -15,8 +15,8 @@ require('../css/style.css');
 /* global Blob, logBtn, credentialsBtn, reauthBtn, downloadLogBtn */ // eslint-disable-line
 let sessionLogEnable = false;
 let loggedData = false;
-let allowreplay = false;
-let allowreauth = false;
+// let allowreplay = false;
+let allowreauth = true;
 let sessionLog: string;
 let sessionFooter: any;
 let logDate: {
@@ -32,10 +32,10 @@ let myFile: string;
 let errorExists: boolean;
 const term = new Terminal();
 // DOM properties
-const logBtn = document.getElementById('logBtn');
-const credentialsBtn = document.getElementById('credentialsBtn');
+// const logBtn = document.getElementById('logBtn');
+// const credentialsBtn = document.getElementById('credentialsBtn');
 const reauthBtn = document.getElementById('reauthBtn');
-const downloadLogBtn = document.getElementById('downloadLogBtn');
+// const downloadLogBtn = document.getElementById('downloadLogBtn');
 const status = document.getElementById('status');
 const header = document.getElementById('header');
 const footer = document.getElementById('footer');
@@ -95,7 +95,7 @@ function toggleLog () { // eslint-disable-line
   if (sessionLogEnable === true) {
     sessionLogEnable = false;
     loggedData = true;
-    logBtn.innerHTML = '<i class="fas fa-clipboard fa-fw"></i> Start Log';
+    // logBtn.innerHTML = '<i class="fas fa-clipboard fa-fw"></i> Start Log';
     currentDate = new Date();
     sessionLog = `${sessionLog}\r\n\r\nLog End for ${sessionFooter}: ${currentDate.getFullYear()}/${
       currentDate.getMonth() + 1
@@ -106,9 +106,9 @@ function toggleLog () { // eslint-disable-line
   }
   sessionLogEnable = true;
   loggedData = true;
-  logBtn.innerHTML = '<i class="fas fa-cog fa-spin fa-fw"></i> Stop Log';
-  downloadLogBtn.style.color = '#000';
-  downloadLogBtn.addEventListener('click', downloadLog);
+  // logBtn.innerHTML = '<i class="fas fa-cog fa-spin fa-fw"></i> Stop Log';
+  // downloadLogBtn.style.color = '#000';
+  // downloadLogBtn.addEventListener('click', downloadLog);
   currentDate = new Date();
   sessionLog = `Log Start for ${sessionFooter}: ${currentDate.getFullYear()}/${
     currentDate.getMonth() + 1
@@ -129,19 +129,20 @@ function replayCredentials () { // eslint-disable-line
 // draw/re-draw menu and reattach listeners
 // when dom is changed, listeners are abandonded
 function drawMenu() {
-  logBtn.addEventListener('click', toggleLog);
+  // logBtn.addEventListener('click', toggleLog);
+
   if (allowreauth) {
     reauthBtn.addEventListener('click', reauthSession);
     reauthBtn.style.display = 'block';
   }
-  if (allowreplay) {
-    credentialsBtn.addEventListener('click', replayCredentials);
-    credentialsBtn.style.display = 'block';
-  }
-  if (loggedData) {
-    downloadLogBtn.addEventListener('click', downloadLog);
-    downloadLogBtn.style.display = 'block';
-  }
+  // if (allowreplay) {
+  //   credentialsBtn.addEventListener('click', replayCredentials);
+  //   credentialsBtn.style.display = 'block';
+  // }
+  // if (loggedData) {
+  //   downloadLogBtn.addEventListener('click', downloadLog);
+  //   downloadLogBtn.style.display = 'block';
+  // }
 }
 
 function resizeScreen() {
@@ -228,10 +229,10 @@ socket.on('statusBackground', (data: string) => {
 socket.on('allowreplay', (data: boolean) => {
   if (data === true) {
     debug(`allowreplay: ${data}`);
-    allowreplay = true;
+    // allowreplay = true;
     drawMenu();
   } else {
-    allowreplay = false;
+    // allowreplay = false;
     debug(`allowreplay: ${data}`);
   }
 });

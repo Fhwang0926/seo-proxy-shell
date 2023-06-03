@@ -176,7 +176,7 @@ exports.connect = function connect(req, res) {
       (validator.isBoolean(`${req.headers.allowreplay}`)
         ? parseBool(req.headers.allowreplay)
         : false),
-    allowreauth: config.options.allowreauth || false,
+    allowreauth: config.options.allowreauth || true,
     mrhsession:
       validator.isAlphanumeric(`${req.headers.mrhsession}`) && req.headers.mrhsession
         ? req.headers.mrhsession
