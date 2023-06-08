@@ -10,7 +10,6 @@ on:
         default: 'main'
         type: 'string'
         required: true
-
 jobs:
   docker:
     runs-on: ubuntu-latest
