@@ -64,7 +64,7 @@ const configDefault = {
     cursorBlink: true,
     scrollback: 10000,
     tabStopWidth: 8,
-    bellStyle: 'sound',
+    bellStyle: 'none',
   },
   header: {
     text: null,
