@@ -204,7 +204,7 @@ exports.connect = function connect(req, res) {
 };
 
 exports.notfound = function notfound(_req, res) {
-  res.status(404).send("Sorry, can't find that!");
+  res.status(404).send("Sorry, can't find that!~~~");
 };
 
 exports.handleErrors = function handleErrors(err, _req, res) {
