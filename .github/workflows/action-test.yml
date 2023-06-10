@@ -21,7 +21,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=${{ secrets.DOCKER_REGISTRY }}/seo/seo-proxy-shell
+          DOCKER_IMAGE=${{ secrets.DOCKER_REGISTRY }}/seo/shell
 
           VERSION=${{ inputs.tag }}
           VERSION="${VERSION//v}"
