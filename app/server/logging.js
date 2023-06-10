@@ -21,6 +21,11 @@ function webssh2debug(socket, msg) {
   debug('WebSSH2')(`${prefix(socket)} ${msg}`);
 }
 
+// public
+function websocket2debug(socket, msg) {
+  debug('Socket')(`${prefix(socket)} ${msg}`);
+}
+
 /**
  * audit log to console
  * @param {object} socket Socket information
@@ -44,4 +49,4 @@ function logError(socket, myFunc, err) {
   socket.emit('ssherror', `SSH ${myFunc}: ${err}`);
 }
 
-module.exports = { logError, auditLog, webssh2debug };
+module.exports = { logError, auditLog, webssh2debug, websocket2debug };

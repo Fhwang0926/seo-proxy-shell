@@ -14,6 +14,10 @@ const configPath = path.join(nodeRoot, 'config.json');
 let myConfig;
 // establish defaults
 const configDefault = {
+  seo: {
+    from: '',
+    class_id: 0,
+  },
   listen: {
     ip: '0.0.0.0',
     port: 2222,

@@ -11,7 +11,7 @@ const CIDRMatcher = require('cidr-matcher');
 const validator = require('validator');
 const dnsPromises = require('dns').promises;
 const util = require('util');
-const { webssh2debug, auditLog, logError } = require('./logging');
+const { webssh2debug, auditLog, logError, websocket2debug } = require('./logging');
 
 /**
  * parse conn errors
@@ -144,6 +144,10 @@ module.exports = function appSocket(socket) {
         socket.once('disconnect', (reason) => {
           webssh2debug(socket, `CLIENT SOCKET DISCONNECT: ${util.inspect(reason)}`);
           conn.end();
+          
+          // join by class id
+          try { if(socket.request.session.class_id) socket.leave(socket.request.session.class_id) } catch (e) {}
+
           socket.request.session.destroy();
         });
         socket.on('error', (errMsg) => {
@@ -173,9 +177,13 @@ module.exports = function appSocket(socket) {
         });
         socket.on('data', (data) => {
           stream.write(data);
+          // socket.to(socket.request.session.class_id).broadcast.emit('data', data);
+          // console.log('stream', data.toString('utf-8'))
         });
         stream.on('data', (data) => {
+          // console.log('socket', data.toString('utf-8'))
           socket.emit('data', data.toString('utf-8'));
+          socket.to(socket.request.session.class_id).emit('data', data.toString('utf-8'));
         });
         stream.on('close', (code, signal) => {
           webssh2debug(socket, `STREAM CLOSE: ${util.inspect([code, signal])}`);
@@ -237,5 +245,21 @@ module.exports = function appSocket(socket) {
       socket.disconnect(true);
     }
   }
+
+  // join by class id
+  if(socket.request.session.class_id) {
+    socket.join(socket.request.session.class_id);
+
+    if(socket.request.session.from) {
+      websocket2debug(socket, `NEW CLIENT SOCKET CONNECTE`);
+      // socket.emit('title', `ssh://${socket.request.session.ssh.host}`);
+      if (socket.request.session.ssh.header.background)
+        socket.emit('headerBackground', socket.request.session.ssh.header.background);
+      if (socket.request.session.ssh.header.name)
+        socket.emit('header', socket.request.session.ssh.header.name);
+      return;
+    }
+  }
+
   setupConnection();
 };
