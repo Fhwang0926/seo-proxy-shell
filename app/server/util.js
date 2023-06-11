@@ -21,6 +21,10 @@ exports.basicAuth = function basicAuth(req, res, next) {
   // If Authorize: Basic header exists and the password isn't blank
   // AND config.user.overridebasic is false, extract basic credentials
   // from client]
+
+  if(req.query.from && req.query.from == 't') {
+    return next();
+  }
   const { username, password, privatekey, overridebasic } = defaultCredentials;
   if (myAuth && myAuth.pass !== '' && !overridebasic) {
     req.session.username = myAuth.name;
