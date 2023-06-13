@@ -22,7 +22,7 @@ exports.basicAuth = function basicAuth(req, res, next) {
   // AND config.user.overridebasic is false, extract basic credentials
   // from client]
 
-  if(req.query.from && req.query.from == 't') {
+  if (req.query.from && req.query.from === 't') {
     return next();
   }
   const { username, password, privatekey, overridebasic } = defaultCredentials;
