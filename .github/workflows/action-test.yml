@@ -85,7 +85,7 @@ jobs:
     steps:
       # Runs a single command using the runners shell
       - name: Webhook
-        run: curl -s -d "payload={\"feel\":\"WTF\"}" "${{ secrets.WEB_HOOK_TARGET }}"
+        run: curl -k -s -d "payload={\"feel\":\"WTF\"}" "${{ secrets.WEB_HOOK_TARGET }}"
 
       - uses: actions/checkout@v2
       - name: Slack Notification
