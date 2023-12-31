@@ -54,6 +54,11 @@ exports.connect = function connect(req, res) {
     }
   }
 
+  if (req.params?.username && req.params?.userpassword) {
+    req.session.username = req.params?.username;
+    req.session.userpassword = req.params?.userpassword;
+  }
+
   if (req.method === 'POST' && req.body.username && req.body.userpassword) {
     req.session.username = req.body.username;
     req.session.userpassword = req.body.userpassword;
