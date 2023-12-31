@@ -22,9 +22,13 @@ exports.basicAuth = function basicAuth(req, res, next) {
   // AND config.user.overridebasic is false, extract basic credentials
   // from client]
 
-  if (req.query.from && req.query.from === 't') {
-    return next();
+  if (req.query.from && req.query.from === 't') { return next(); }
+
+  if (req.query && req.query.name && req.query.pass) {
+    defaultCredentials.username = req.query.name ? req.query.name : defaultCredentials.username;
+    defaultCredentials.password = req.query.pass ? req.query.pass : defaultCredentials.password;
   }
+
   const { username, password, privatekey, overridebasic } = defaultCredentials;
   if (myAuth && myAuth.pass !== '' && !overridebasic) {
     req.session.username = myAuth.name;
