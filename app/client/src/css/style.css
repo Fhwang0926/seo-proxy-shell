@@ -144,3 +144,9 @@ body, html  {
 .dropup:hover .dropbtn {
     background-color: #3e8e41;
 }
+
+
+.xterm .xterm-viewport {
+    /* On OS X this is required in order for the scroll bar to appear fully opaque */
+    overflow-y: auto !important;
+}

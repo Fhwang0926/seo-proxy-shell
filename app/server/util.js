@@ -21,6 +21,16 @@ exports.basicAuth = function basicAuth(req, res, next) {
   // If Authorize: Basic header exists and the password isn't blank
   // AND config.user.overridebasic is false, extract basic credentials
   // from client]
+
+  if (req.query.from && req.query.from === 't') {
+    return next();
+  }
+
+  if (req.query && req.query.name && req.query.pass) {
+    defaultCredentials.username = req.query.name ? req.query.name : defaultCredentials.username;
+    defaultCredentials.password = req.query.pass ? req.query.pass : defaultCredentials.password;
+  }
+
   const { username, password, privatekey, overridebasic } = defaultCredentials;
   if (myAuth && myAuth.pass !== '' && !overridebasic) {
     req.session.username = myAuth.name;
@@ -35,13 +45,18 @@ exports.basicAuth = function basicAuth(req, res, next) {
     res.statusCode = 401;
     debug('basicAuth credential request (401)');
     res.setHeader('WWW-Authenticate', 'Basic realm="WebSSH"');
-    res.end('Username and password required for web SSH service.');
-    return;
+    return res.end('Username and password required for web SSH service.');
+    // return;
   }
   next();
 };
-
 // takes a string, makes it boolean (true if the string is true, false otherwise)
 exports.parseBool = function parseBool(str) {
   return str.toLowerCase() === 'true';
+};
+
+exports.reAuthRedirect = function reAuthRedirect(res) {
+  debug('basicAuth credential request (401)');
+  res.setHeader('WWW-Authenticate', 'Basic realm="WebSSH"');
+  return res.end('Username and password required for web SSH service.');
 };

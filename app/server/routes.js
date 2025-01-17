@@ -27,6 +27,7 @@ exports.reauth = function reauth(req, res) {
 exports.connect = function connect(req, res) {
   res.sendFile(path.join(path.join(publicPath, 'client.htm')));
 
+  let { class_id, from } = config.seo;
   let { host, port } = config.ssh;
   let { text: header, background: headerBackground } = config.header;
   let { term: sshterm, readyTimeout } = config.ssh;
@@ -51,6 +52,11 @@ exports.connect = function connect(req, res) {
     ) {
       host = req.params.host;
     }
+  }
+
+  if (req.params?.username && req.params?.userpassword) {
+    req.session.username = req.params?.username;
+    req.session.userpassword = req.params?.userpassword;
   }
 
   if (req.method === 'POST' && req.body.username && req.body.userpassword) {
@@ -145,6 +151,13 @@ exports.connect = function connect(req, res) {
 
     if (req.query?.letterSpacing && validator.isNumeric(`${req.query.letterSpacing}`))
       letterSpacing = req.query.letterSpacing;
+    
+    // add custom seo
+    if (req.query?.class_id && validator.isNumeric(`${req.query.class_id}`))
+      class_id = req.query.class_id;
+    
+    if (req.query?.from)
+      from = req.query.from;
   }
 
   req.session.ssh = {
@@ -176,7 +189,7 @@ exports.connect = function connect(req, res) {
       (validator.isBoolean(`${req.headers.allowreplay}`)
         ? parseBool(req.headers.allowreplay)
         : false),
-    allowreauth: config.options.allowreauth || false,
+    allowreauth: config.options.allowreauth || true,
     mrhsession:
       validator.isAlphanumeric(`${req.headers.mrhsession}`) && req.headers.mrhsession
         ? req.headers.mrhsession
@@ -189,10 +202,14 @@ exports.connect = function connect(req, res) {
   };
   if (req.session.ssh.header.name) validator.escape(req.session.ssh.header.name);
   if (req.session.ssh.header.background) validator.escape(req.session.ssh.header.background);
+
+  // custom seo
+  req.session.class_id = class_id;
+  req.session.from = from;
 };
 
 exports.notfound = function notfound(_req, res) {
-  res.status(404).send("Sorry, can't find that!");
+  res.status(404).send("Sorry, can't find that!~~~");
 };
 
 exports.handleErrors = function handleErrors(err, _req, res) {

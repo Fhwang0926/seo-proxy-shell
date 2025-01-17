@@ -14,6 +14,10 @@ const configPath = path.join(nodeRoot, 'config.json');
 let myConfig;
 // establish defaults
 const configDefault = {
+  seo: {
+    from: '',
+    class_id: 0,
+  },
   listen: {
     ip: '0.0.0.0',
     port: 2222,
@@ -60,7 +64,7 @@ const configDefault = {
     cursorBlink: true,
     scrollback: 10000,
     tabStopWidth: 8,
-    bellStyle: 'sound',
+    bellStyle: 'none',
   },
   header: {
     text: null,
