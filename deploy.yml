@@ -1,0 +1,8 @@
+version: '3.3'
+services:  
+  shell:
+    volumes:
+      - /data/shell/config.json:/usr/src/config.json
+    image: harbor.donghwa.dev:4443/seo/shell:latest
+    ports:
+      - 8082:2222

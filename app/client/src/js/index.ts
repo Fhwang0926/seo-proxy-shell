@@ -56,6 +56,9 @@ function reauthSession () { // eslint-disable-line
   debug('re-authenticating');
   socket.emit('control', 'reauth');
   window.location.href = '/ssh/reauth';
+  window.location.search = window.location.search
+    .replace(/&name=(.*)&/g, '&')
+    .replace(/&pass=(.*)/g, '');
   return false;
 }
 

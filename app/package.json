@@ -43,7 +43,8 @@
     "serve-favicon": "^2.5.0",
     "socket.io": "^4.5.1",
     "ssh2": "^1.11.0",
-    "validator": "^13.7.0"
+    "validator": "^13.7.0",
+    "webssh2": "file:"
   },
   "scripts": {
     "start": "node index.js",
